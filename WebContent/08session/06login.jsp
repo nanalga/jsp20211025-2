@@ -13,5 +13,19 @@
 </head>
 <body>
 
+<form action="">
+	<input type="text" name ="id" placeholder="아이디"> <br>
+	<input type="password" name="password" placeholder="암호"> <br>
+	<input type="submit" value="로그인">
+</form>
+
+<%
+String id = request.getParameter("id");
+if(id != null){
+	session.setAttribute("username", id);
+}
+%>
+
+<a href="06main.jsp">메인페이지</a>
 </body>
 </html>
