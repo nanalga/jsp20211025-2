@@ -41,6 +41,7 @@ true
 <p>city : ${data1.data1.city }</p>
 <p>kid : ${data1.data1.info.kid }</p>
 
+<%-- test중  --%>
 
 </body>
 </html>
