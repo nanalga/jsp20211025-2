@@ -28,5 +28,5 @@ book.setPublisher(publisher);
 book.setStock(stock);
 
 // 3. redirect
-response.sendRedirect("25list-book.jsp");
+response.sendRedirect("25list-book-tag.jsp");
 %>

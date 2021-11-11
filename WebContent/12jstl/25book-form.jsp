@@ -35,7 +35,7 @@
 	
 	<br>
 	
-	<a href="25list-book.jsp">책 목록 보기</a>
+	<a href="25list-book-tag.jsp">책 목록 보기</a>
 	
 </body>
 </html>

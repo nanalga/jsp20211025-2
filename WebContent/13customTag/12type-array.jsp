@@ -3,6 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags/13tag" %>
 <% request.setCharacterEncoding("utf-8"); %>
 
 <!DOCTYPE html>
@@ -17,29 +18,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%
+pageContext.setAttribute("attr1", new String[] {"java", "css", "html"});
+pageContext.setAttribute("attr2", new int[] {100, 200, 300});
+%>
 
-<c:set value="${applicationScope.books[param.index] }" var="book" />
 
-<h1>책 수정</h1>
+<my:t12 a="${attr1 }" b="${attr2 }"></my:t12>
 
-	<form action="25modify-process.jsp" method="post">
-		<input type="hidden" name="index" value="${param.index }">
-		<input type="text" name="title" placeholder="책 제목" value="${book.title }">
-		<br>
-		<input type="text" name="writer" placeholder="저자" value="${book.writer }">
-		<br>
-		<input type="text" name="price" placeholder="가격" value="${book.price }">
-		<br>
-		<input type="text" name="publisher" placeholder="출판사" value="${book.publisher }">
-		<br>
-		<input type="text" name="stock" value="${book.stock }"> 재고
-		<br>
-		<input type="submit" value="등록">
-	</form>
-	
-	<br>
-	
-	<a href="25list-book-tag.jsp">책 목록 보기</a>
+
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>

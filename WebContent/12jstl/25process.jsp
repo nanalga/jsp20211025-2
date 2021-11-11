@@ -27,5 +27,5 @@ list.add(book);
 
 
 // 3. 25list-book.jsp로 redirect
-response.sendRedirect("25list-book.jsp");
+response.sendRedirect("25list-book-tag.jsp");
 %>

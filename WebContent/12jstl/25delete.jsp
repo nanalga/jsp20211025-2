@@ -13,7 +13,7 @@ int index = Integer.parseInt(indexStr);
 
 list.remove(index);
 
-response.sendRedirect("25list-book.jsp");
+response.sendRedirect("25list-book-tag.jsp");
 %>
 
 
