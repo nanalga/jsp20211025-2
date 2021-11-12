@@ -1,0 +1,14 @@
+.myBtn {
+	padding: 5px;
+	border: 2px solid green;
+	background-color: blue;
+	color: white;
+}
+
+.myHeader {
+	/* css 작성 */
+	border: 3px solid tomato;
+	background-color: green;
+	color: yellow;
+	
+}

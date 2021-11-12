@@ -37,7 +37,6 @@
 				<tr>
 					<th>#</th>
 					<th>삭제</th>
-					<th>#</th>
 					<th>제목</th>
 					<th>저자</th>
 					<th>가격</th>
@@ -57,9 +56,12 @@
 						</c:url>
 						
 						<td>
-							<a class="btn btn-danger" href="${deleteUrl }">
-							<i class="fas fa-trash-alt"></i>
-							</a>
+							<!-- <a class="btn btn-danger" href="${deleteUrl }"><i class="fas fa-trash-alt"></i> </a> -->
+							
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+								<i class="fas fa-trash-alt"></i>
+							</button>
+							
 							<a href="${modifyUrl }" class="btn-secondary">
 								<i class="fas fa-edit"></i>
 							</a>
@@ -75,6 +77,26 @@
 			</tbody>
 		</table>
 	</c:if>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">...</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
