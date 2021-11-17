@@ -37,6 +37,8 @@
 							<th>가격</th>
 							<th>출판사</th>
 							<th>재고</th>
+							<th>삭제</th>
+							<th>수정</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -48,6 +50,23 @@
 								<th>${book.price }</th>
 								<th>${book.publisher }</th>
 								<th>${book.stock }</th>
+								<th>
+									<c:url value="/servlet09/remove" var="removeUrl">
+										<c:param name="id" value="${status.index }"  />
+									</c:url>
+									<button type="button" class="btn btn-primary removeBtn" data-toggle="modal" data-target="#deleteModal1" data-link="${removeUrl }">
+										<i class="fas fa-trash"></i>
+									</button>
+								</th>
+								<th>
+									<c:url value="/servlet09/modify" var="modifyUrl">
+										<c:param name="id" value="${status.index }" />
+									</c:url>
+									<!-- a.btn.btn-warning>i.fas.fa-edit -->
+									<a href="${modifyUrl }" class="btn btn-warning">
+										<i class="fas fa-edit"></i>
+									</a>
+								</th>
 							</tr>
 						</c:forEach>
 						</tr>
@@ -57,7 +76,37 @@
 		</div>
 	</div>
 
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModal1">삭제 확인</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">삭제 하시겠습니까?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					<a href="" id="removeModalBtn" type="button" class="btn btn-primary">삭제</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+	
+	<script>
+		$(document).ready(function(){
+			$(".removeBtn").click(function(){
+				let link = $(this).attr("data-link");
+				$("#removeModalBtn").attr("href", link);
+			});
+		});
+	
+	</script>
+	
 </body>
 </html>

@@ -35,4 +35,99 @@
   	<url-pattern>/servlet01/servlet04</url-pattern>
   </servlet-mapping>
   
+  <!-- 필터 설정 -->
+  <filter>
+  	<filter-name>f03filter</filter-name>
+  	<filter-class>filter01.F03Filter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f03filter</filter-name>
+  	<url-pattern>/filterex1/s03</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>f04filter</filter-name>
+  	<filter-class>filter01.F04Filter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f04filter</filter-name>
+  	<url-pattern>/filterex1/s04</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>f05filter</filter-name>
+  	<filter-class>filter02.F05Filter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f05filter</filter-name>
+  	<url-pattern>/filterex2/s01</url-pattern>
+  	<url-pattern>/filterex2/s02</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>f06filter</filter-name>
+  	<filter-class>filter02.F06Filter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f06filter</filter-name>
+  	<url-pattern>/filterex2/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>f07filter</filter-name>
+  	<filter-class>filter02.F07Filter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f07filter</filter-name>
+  	<url-pattern>/filterex2/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>f08filter</filter-name>
+  	<filter-class>filter03.F08Filter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f08filter</filter-name>
+  	<url-pattern>/filterex3/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>f09filter</filter-name>
+  	<filter-class>filter03.F09Filter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f09filter</filter-name>
+  	<url-pattern>/filterex3/*</url-pattern>
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>f10filter</filter-name>
+  	<filter-class>filter04.F10MemberFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>f10filter</filter-name>
+  	<url-pattern>/filterex4/member</url-pattern>
+  </filter-mapping>
+  
+  <!-- Book App Character Encoding Filter -->
+  <filter>
+  	<filter-name>BookCharEncoingFilter</filter-name>
+  	<filter-class>servlet08.S01BookCharEncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>BookCharEncoingFilter</filter-name>
+  	<url-pattern>/servlet08/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- Book App Character Encoding Filter2 -->
+  <filter>
+  	<filter-name>BookCharEncodingFilter2</filter-name>
+  	<filter-class>servlet09.S02BookCharEncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>BookCharEncodingFilter2</filter-name>
+  	<url-pattern>/servlet09/*</url-pattern>
+  </filter-mapping>
+  
+  
 </web-app>
