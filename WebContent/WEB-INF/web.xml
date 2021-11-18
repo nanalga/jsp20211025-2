@@ -10,6 +10,18 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <!-- ServletContextListner 설정 -->
+  <listener>
+  	<listener-class>listener01.AppListener03</listener-class>
+  </listener>
+  
+  <listener>
+  	<listener-class>listener01.AppListener04</listener-class>
+  </listener>
+  <listener>
+  	<listener-class>listener01.AppListener05</listener-class>
+  </listener>
+  
   <!-- 세션 설정  -->
   <session-config>
   	<!-- 분 단위 -->
