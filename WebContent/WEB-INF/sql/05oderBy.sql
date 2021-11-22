@@ -27,5 +27,5 @@ SELECT * FROM Customers ORDER BY Country DESC, CustomerName ASC;
 -- 고객을 Country ASC, City ASC, 고객명 DESC 정렬 조회
 SELECT * FROM Customers ORDER BY Country ,City, CustomerName DESC;
 
-
+SELECT CustomerName FROM Customers WHERE CustomerID = 1;
 
