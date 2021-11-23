@@ -2,7 +2,7 @@ package jdbc02.bean;
 
 public class Customer {
 	
-	private String customerID;
+	private int customerID;
 	private String customerName;
 	private String contactName;
 	private String address;
@@ -10,10 +10,10 @@ public class Customer {
 	private String postalCode;
 	private String country;
 	
-	public String getCustomerID() {
+	public int getCustomerID() {
 		return customerID;
 	}
-	public void setCustomerID(String customerID) {
+	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
 	

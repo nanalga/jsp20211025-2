@@ -1,9 +1,9 @@
-package jdbc02.servlet1;
+package jdbc03;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +19,16 @@ import javax.sql.DataSource;
 import jdbc02.bean.Customer;
 
 /**
- * Servlet implementation class JDBC08Servlet
+ * Servlet implementation class JDBC15Servlet
  */
-@WebServlet("/jdbc02/s08")
-public class JDBC08Servlet extends HttpServlet {
+@WebServlet("/jdbc03/s15")
+public class JDBC15Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JDBC08Servlet() {
+    public JDBC15Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,82 +39,53 @@ public class JDBC08Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 0. 사전 작업
 		ServletContext application = request.getServletContext();
-		DataSource pool = (DataSource) application.getAttribute("dbpool");
-		
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		
+		DataSource ds = (DataSource) application.getAttribute("dbpool");
 		List<Customer> list = new ArrayList<>();
 		
-		// 2. request 분석 / 가공
-		
+		// 2. request 분석 가공
+		String country = request.getParameter("country");
 		
 		// 3. business logic
-		String sql = " SELECT "
-				+ " CustomerID, "
-				+ " CustomerName, "
-				+ " ContactName, "
-				+ " Address, "
-				+ " City, "
-				+ " PostalCode, "
-				+ " Country "
-				+ " FROM "
-				+ " Customers ";
+		String sql = "SELECT "
+				+ "CustomerID , CustomerName, ContactName, Address, City, PostalCode, Country "
+				+ "FROM Customers WHERE Country = ?";
 		
-		try {
-			// 1. connect얻고
-			con = pool.getConnection();
-			// 2. statement 얻고
-			stmt = con.createStatement();
-			// 3. resultSet 얻고
-			rs = stmt.executeQuery(sql);
+		try (
+				Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				){
 			
-			while(rs.next()) {
-				Customer bean = new Customer();
-				
-				bean.setCustomerID(rs.getInt(1));
-				bean.setCustomerName(rs.getNString(2));
-				bean.setContactName(rs.getNString(3));
-				bean.setAddress(rs.getString(4));
-				bean.setCity(rs.getNString(5));
-				bean.setPostalCode(rs.getString(6));
-				bean.setCountry(rs.getString(7));
-				
-				list.add(bean);
+			pstmt.setString(1, country);
+			
+			try(
+					ResultSet rs = pstmt.executeQuery();
+					){
+				while(rs.next()) {
+					
+					Customer cus = new Customer();
+					
+					int i = 1;
+					
+					cus.setCustomerID(rs.getInt(i++));
+					cus.setCustomerName(rs.getString(i++));
+					cus.setContactName(rs.getString(i++));
+					cus.setAddress(rs.getString(i++));
+					cus.setCity(rs.getString(i++));
+					cus.setPostalCode(rs.getString(i++));
+					cus.setCountry(rs.getString(i++));
+					
+					list.add(cus);
+				}
 			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-		} finally {
-			// 4. 자원 닫기
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		
 		// 4. add attribute
 		request.setAttribute("customers", list);
 		
-		// 5. forward / redirect
+		// 5. forward
 		String path = "/WEB-INF/view/jdbc02/v08.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
 	}

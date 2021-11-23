@@ -1,11 +1,9 @@
-package jdbc02.servlet1;
+package jdbc03;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,19 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import jdbc02.bean.Supplier;
+import jdbc02.bean.Customer;
 
 /**
- * Servlet implementation class JDBC10Servlet
+ * Servlet implementation class JDBC12Servlet
  */
-@WebServlet("/jdbc02/s10")
-public class JDBC10Servlet extends HttpServlet {
+@WebServlet("/jdbc03/s12")
+public class JDBC12Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JDBC10Servlet() {
+    public JDBC12Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,51 +34,49 @@ public class JDBC10Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 0. 사전작업
+		// 0. 사전 작업
 		ServletContext application = request.getServletContext();
-		DataSource ds = (DataSource)application.getAttribute("dbpool");
+		DataSource ds = (DataSource) application.getAttribute("dbpool");
+		Customer cus = new Customer();
 		
-		List<Supplier> list = new ArrayList<>();
+		// 2. request 분석 가공
+		String id = request.getParameter("customerID");
 		
-		// 2. reuest 분석
-		
-		// 3. business 로직
-		String sql = "SELECT SupplierID, SupplierName, ContactName, Address, City, PostalCode, Country, Phone "
-				+ " FROM Suppliers";
+		// 3. business logic
+		String sql = "SELECT "
+				+ "CustomerID , CustomerName, ContactName, Address, City, PostalCode, Country "
+				+ "FROM Customers WHERE CustomerID = " + id;
 		
 		try (
 				Connection con = ds.getConnection();
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
-				) {
+				){
 			
-			while(rs.next()) {
-				Supplier supplier = new Supplier();
+			if(rs.next()) {
+		
+				int i = 1;
 				
-				supplier.setSupplierId(rs.getInt(1));
-				supplier.setSupplierName(rs.getString(2));
-				supplier.setContactName(rs.getString(3));
-				supplier.setAddress(rs.getString(4));
-				supplier.setCity(rs.getString(5));
-				supplier.setPostalCode(rs.getString(6));
-				supplier.setCountry(rs.getString(7));
-				supplier.setPhone(rs.getString(8));
-				
-				list.add(supplier);
+				cus.setCustomerID(rs.getInt(i++));
+				cus.setCustomerName(rs.getString(i++));
+				cus.setContactName(rs.getString(i++));
+				cus.setAddress(rs.getString(i++));
+				cus.setCity(rs.getString(i++));
+				cus.setPostalCode(rs.getString(i++));
+				cus.setCountry(rs.getString(i++));
 			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
-		} 
+		}
 		
 		// 4. add attribute
-		request.setAttribute("supplier", list);
+		request.setAttribute("customer", cus);
 		
-		// 5. forward / redirect
-		String path = "/WEB-INF/view/jdbc02/v10.jsp";
+		// 5. forward
+		String path = "/WEB-INF/view/jdbc03/v12.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
-	
+		
 	}
 
 	/**

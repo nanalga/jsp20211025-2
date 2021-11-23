@@ -15,19 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import jdbc02.bean.Supplier;
+import jdbc02.bean.Employee;
 
 /**
- * Servlet implementation class JDBC10Servlet
+ * Servlet implementation class JDBC11Servlet
  */
-@WebServlet("/jdbc02/s10")
-public class JDBC10Servlet extends HttpServlet {
+@WebServlet("/jdbc02/s11")
+public class JDBC11Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JDBC10Servlet() {
+    public JDBC11Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,49 +36,50 @@ public class JDBC10Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 0. 사전작업
+		// 0. 사전 작업
 		ServletContext application = request.getServletContext();
 		DataSource ds = (DataSource)application.getAttribute("dbpool");
 		
-		List<Supplier> list = new ArrayList<>();
+		List<Employee> list = new ArrayList<>();
 		
-		// 2. reuest 분석
+		// 2. request 처리
 		
-		// 3. business 로직
-		String sql = "SELECT SupplierID, SupplierName, ContactName, Address, City, PostalCode, Country, Phone "
-				+ " FROM Suppliers";
+		// 3. business 로직 처리
+		String sql = "SELECT "
+				+ " EmployeeID, LastName, FirstName, BirthDate, Photo, Notes "
+				+ " FROM "
+				+ " Employees";
 		
 		try (
 				Connection con = ds.getConnection();
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
-				) {
+				){
 			
 			while(rs.next()) {
-				Supplier supplier = new Supplier();
+				Employee e = new Employee();
 				
-				supplier.setSupplierId(rs.getInt(1));
-				supplier.setSupplierName(rs.getString(2));
-				supplier.setContactName(rs.getString(3));
-				supplier.setAddress(rs.getString(4));
-				supplier.setCity(rs.getString(5));
-				supplier.setPostalCode(rs.getString(6));
-				supplier.setCountry(rs.getString(7));
-				supplier.setPhone(rs.getString(8));
+				int i = 1;
 				
-				list.add(supplier);
+				e.setEmployeeID(rs.getInt(i++));
+				e.setLastName(rs.getString(i++));
+				e.setFirstName(rs.getString(i++));
+				e.setBirthDate(rs.getDate(i++));
+				e.setPhoto(rs.getString(i++));
+				e.setNotes(rs.getString(i++));
+				
+				list.add(e);
 			}
-			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-		} 
+		}
 		
-		// 4. add attribute
-		request.setAttribute("supplier", list);
 		
-		// 5. forward / redirect
-		String path = "/WEB-INF/view/jdbc02/v10.jsp";
+		// 4. attribute 생성
+		request.setAttribute("employees", list);
+		
+		// 5. foward / redirect
+		String path = "/WEB-INF/view/jdbc02/v11.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
 	
 	}

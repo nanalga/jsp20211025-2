@@ -1,7 +1,8 @@
-package jdbc02.servlet1;
+package jdbc03;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -18,16 +19,16 @@ import javax.sql.DataSource;
 import jdbc02.bean.Supplier;
 
 /**
- * Servlet implementation class JDBC10Servlet
+ * Servlet implementation class JDBC16Servlet
  */
-@WebServlet("/jdbc02/s10")
-public class JDBC10Servlet extends HttpServlet {
+@WebServlet("/jdbc03/s16")
+public class JDBC16Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JDBC10Servlet() {
+    public JDBC16Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,43 +43,54 @@ public class JDBC10Servlet extends HttpServlet {
 		
 		List<Supplier> list = new ArrayList<>();
 		
-		// 2. reuest 분석
+		// 2. request 작업
+		String country = request.getParameter("country");
 		
 		// 3. business 로직
-		String sql = "SELECT SupplierID, SupplierName, ContactName, Address, City, PostalCode, Country, Phone "
-				+ " FROM Suppliers";
+		String sql = "SELECT SupplierID, SupplierName,ContactName, Address, City, PostalCode, Country, Phone "
+				+ "FROM Suppliers WHERE Country = ?";
 		
-		try (
+		try (	
 				Connection con = ds.getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
-				) {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				
+				){
+			pstmt.setString(1, country);
 			
-			while(rs.next()) {
-				Supplier supplier = new Supplier();
+			try(
+					ResultSet rs = pstmt.executeQuery();
+					
+					){
 				
-				supplier.setSupplierId(rs.getInt(1));
-				supplier.setSupplierName(rs.getString(2));
-				supplier.setContactName(rs.getString(3));
-				supplier.setAddress(rs.getString(4));
-				supplier.setCity(rs.getString(5));
-				supplier.setPostalCode(rs.getString(6));
-				supplier.setCountry(rs.getString(7));
-				supplier.setPhone(rs.getString(8));
-				
-				list.add(supplier);
+				while(rs.next()) {
+					
+					Supplier sup = new Supplier();
+					
+					int i = 1;
+					
+					sup.setSupplierId(rs.getInt(i++));
+					sup.setSupplierName(rs.getString(i++));
+					sup.setContactName(rs.getString(i));
+					sup.setAddress(rs.getString(i++));
+					sup.setCity(rs.getString(i++));
+					sup.setPostalCode(rs.getString(i++));
+					sup.setCountry(rs.getString(i++));
+					sup.setPhone(rs.getString(i++));
+					
+					list.add(sup);
+					
+				}
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-		} 
+		}
 		
-		// 4. add attribute
+		// 4. add setAttribute
 		request.setAttribute("supplier", list);
 		
-		// 5. forward / redirect
-		String path = "/WEB-INF/view/jdbc02/v10.jsp";
+		// 5. redirect / forward
+		String path = "/WEB-INF/view/jdbc03/v16.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
 	
 	}
