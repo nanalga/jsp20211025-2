@@ -66,4 +66,65 @@ public class SupplierDAO {
 		return list;
 	}
 
+	public boolean insert(Connection con, Supplier supplier) {
+		String sql = "INSERT INTO Suppliers (SupplierName, ContactName, Address, City, PostalCode, Country, Phone) "
+				+ "   VALUES (?, ?, ?, ?, ?, ?, ?) ";
+		
+		int rowCount = 0;
+		
+		try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			pstmt.setString(1, supplier.getSupplierName());
+			pstmt.setString(2, supplier.getContactName());
+			pstmt.setString(3, supplier.getAddress());
+			pstmt.setString(4, supplier.getCity());
+			pstmt.setString(5, supplier.getPostalCode());
+			pstmt.setString(6, supplier.getCountry());
+			pstmt.setString(7, supplier.getPhone());
+			
+			rowCount = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return rowCount == 1;
+		
+	}
+
+	public boolean update(Connection con, Supplier supplier) {
+		String sql = "UPDATE Suppliers "
+				+ " SET "
+				+ "    SupplierName = ?, "
+				+ "    ContactName = ?, "
+				+ "    Address = ?, "
+				+ "    City = ?, "
+				+ "    PostalCode = ?, "
+				+ "    Country = ?, "
+				+ "    Phone = ? "
+				+ " WHERE "
+				+ "    SupplierID = ? ";
+		
+		int rowCount = 0;
+		
+		try(PreparedStatement pstrmt = con.prepareStatement(sql)){
+			int i = 1;
+			pstrmt.setString(i++, supplier.getSupplierName());
+			pstrmt.setString(i++, supplier.getContactName());
+			pstrmt.setString(i++, supplier.getAddress());
+			pstrmt.setString(i++, supplier.getCity());
+			pstrmt.setString(i++, supplier.getPostalCode());
+			pstrmt.setString(i++, supplier.getCountry());
+			pstrmt.setString(i++, supplier.getPhone());
+			pstrmt.setInt(i++, supplier.getSupplierId());
+			
+			rowCount = pstrmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return rowCount == 1;
+	}
+
 }
