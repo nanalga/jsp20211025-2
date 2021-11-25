@@ -127,4 +127,61 @@ public class SupplierDAO {
 		return rowCount == 1;
 	}
 
+	public Supplier selectById(Connection con, int supplierId) {
+		String sql = "SELECT SupplierName, ContactName, Address, City, PostalCode, Phone, Country"
+				+ " FROM Suppliers "
+				+ " WHERE SupplierID = ?";
+		
+		Supplier supplier = new Supplier();
+		
+		try(PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, supplierId);
+			
+			try(ResultSet rs = pstmt.executeQuery()){
+				while(rs.next()) {
+					
+					String supplierName = rs.getString("supplierName");
+					String contactName = rs.getString("contactName");
+					String address = rs.getString("address");
+					String city = rs.getString("city");
+					String postalCode = rs.getString("postalCode");
+					String phone = rs.getString("phone");
+					String country = rs.getString("country");
+					
+					supplier.setSupplierId(supplierId);
+					supplier.setSupplierName(supplierName);
+					supplier.setContactName(contactName);
+					supplier.setAddress(address);
+					supplier.setCity(city);
+					supplier.setPostalCode(postalCode);
+					supplier.setPhone(phone);
+					supplier.setCountry(country);
+					
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return supplier;
+	}
+
+	public boolean deleteById(Connection con, int supplierId) {
+		String sql = "DELETE FROM Suppliers WHERE SupplierID = ?";
+		
+		try(PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			pstmt.setInt(1, supplierId);
+			
+			int count = pstmt.executeUpdate();
+			
+			return count == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;		
+	}
+
 }

@@ -122,4 +122,61 @@ public class CustomerDAO {
 		return rowCount == 1;
 	}
 
+	public Customer selectById(Connection con, int customerID) {
+		String sql = "SELECT CustomerName, ContactName, Address, City, "
+				+ "          PostalCode, Country "
+				+ "FROM Customers "
+				+ "WHERE CustomerID = ?";
+		
+		Customer customer = new Customer();
+		
+		try(PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, customerID);
+			
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					String customerName = rs.getString("CustomerName");
+					String contactName = rs.getString("ContactName");
+					String address = rs.getString("address");
+					String city = rs.getString("City");
+					String postalCode = rs.getString("PostalCode");
+					String country = rs.getString("Country");
+					
+					customer.setCustomerID(customerID);
+					customer.setCustomerName(customerName);
+					customer.setContactName(contactName);
+					customer.setAddress(address);
+					customer.setCity(city);
+					customer.setPostalCode(postalCode);
+					customer.setCountry(country);
+					
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return customer;
+	}
+
+	public boolean deleteById(Connection con, int customerId) {
+		String sql = "DELETE FROM Customers"
+				+ "   WHERE CustomerID = ?";
+		
+		try(PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, customerId);
+			
+			int count = pstmt.executeUpdate();
+			
+			return count == 1;
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
 }
