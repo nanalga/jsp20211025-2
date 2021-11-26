@@ -82,7 +82,7 @@ public class JDBC28Servlet extends HttpServlet {
 		
 		// 2. request처리
 		String supplierName = request.getParameter("supplierName");
-		String contactName = request.getParameter("conatctName");
+		String contactName = request.getParameter("contactName");
 		String address = request.getParameter("address");
 		String city = request.getParameter("city");
 		String postalCode = request.getParameter("postalCode");

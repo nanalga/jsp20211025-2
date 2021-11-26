@@ -51,7 +51,7 @@
  				<!-- .form-group>label[for=select]+select#select1.form-control -->
  				<div class="form-group">
  					<label for="select">Country</label>
- 					<select name="counrty" id="select1" class="form-control">
+ 					<select name="country" id="select1" class="form-control">
  						<c:forEach items="${countryList }" var="country">
  							<option ${supplier.country eq country ? 'selected' : '' } value="${country }">${country }</option>
  						</c:forEach>
