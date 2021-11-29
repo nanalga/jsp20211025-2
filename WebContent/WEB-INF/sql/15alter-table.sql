@@ -12,7 +12,8 @@ ALTER TABLE mytable21Student ADD COLUMN (
     foot DOUBLE
 );
 
--- add constraints
-ALTER TABLE mytable21Student MODIFY COLUMN
-	height DOUBLE NOT NULL
-;
+ALTER TABLE mytable21Student DROP COLUMN foot;
+
+-- AFTER BEFORE
+ALTER TABLE mytable21Student ADD foot DOUBLE AFTER name;
+DESC mytable21Student;
